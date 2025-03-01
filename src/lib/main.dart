@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:src/pages/earning_page.dart';
 import 'package:src/pages/home_page.dart';
 import 'package:src/pages/qr_page.dart';
 
@@ -9,9 +10,10 @@ void main() {
     MaterialApp(
       routes: {
         "/": (context) => HomePage(),
-        "/qr": (context) => QrPage()
+        "/qr": (context) => QrPage(),
+        "/earned": (context) => Earned()
       },
-      theme: ThemeData(fontFamily: GoogleFonts.dmSans().fontFamily, scaffoldBackgroundColor: Colors.white),
+      theme: ThemeData(primaryColor: Color(0xFF333333), fontFamily: GoogleFonts.dmSans().fontFamily, scaffoldBackgroundColor: Colors.white),
     )
   );
 }
