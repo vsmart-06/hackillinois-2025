@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:src/pages/earning_page.dart';
 import 'package:src/pages/home_page.dart';
 import 'package:src/pages/qr_page.dart';
+import 'package:src/pages/spending_page%20.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,7 +11,8 @@ void main() {
     routes: {
       "/": (context) => HomePage(),
       "/qr": (context) => QrPage(),
-      "/earned": (context) => EarningPage()
+      "/earned": (context) => EarningPage(),
+      "/spent": (context) => SpendingPage()
     },
     theme: ThemeData(
         primaryColor: Color(0xFF333333),
