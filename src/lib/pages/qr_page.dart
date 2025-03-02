@@ -24,16 +24,18 @@ class _QrPageState extends State<QrPage> {
   String? wallet;
   String? name;
   int? coins;
+  int? cash;
   bool loaded = false;
   int selected = 0;
 
   String baseUrl = "https://8eac-130-126-255-124.ngrok-free.app";
 
   void loadCoins() async {
-    var response = await post(Uri.parse(baseUrl + "/home"), headers: {"Content-Type": "application/json"}, body: jsonEncode({"ata_acc_add": wallet}));
+    var response = await post(Uri.parse(baseUrl + "/home"), headers: {"Content-Type": "application/json"}, body: jsonEncode({"wallet": wallet}));
     var info = jsonDecode(response.body);
     setState(() {
-      coins = int.parse(info["balance"]);
+      coins = (int.parse(info["balance"]) / (10e8)).toInt();
+      cash = info["user"]["cash"];
       loaded = true;
     });
   }
@@ -171,7 +173,7 @@ class _QrPageState extends State<QrPage> {
                   height: 20,
                 ),
                 QrImageView(
-                  data: baseUrl + "/transit-pay?wallet=${wallet!}&time=${DateTime.now().toString()}",
+                  data: baseUrl + "/transit-pay?wallet=${wallet!}&cash=${cash!}&time=${DateTime.now().toString()}",
                   size: 170,
                 ),
                 SizedBox(height: 20,),
@@ -180,7 +182,7 @@ class _QrPageState extends State<QrPage> {
                   style: TextStyle(fontSize: 14, color: defaultColor),
                 ),
                 Text(
-                  ((selected == 0) ? "\$${coins}" : "${coins} coins"),
+                  ((selected == 0) ? "\$${cash}" : "${coins} coins"),
                   style: TextStyle(
                       fontSize: 30,
                       color: defaultColor,

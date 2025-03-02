@@ -30,10 +30,10 @@ class _HomePageState extends State<HomePage> {
   void loadCoins() async {
     var response = await post(Uri.parse(baseUrl + "/home"),
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"ata_acc_add": wallet}));
+        body: jsonEncode({"wallet": wallet}));
     var info = jsonDecode(response.body);
     setState(() {
-      coins = int.parse(info["balance"]);
+      coins = (int.parse(info["balance"]) / (10e8)).toInt();
       loaded = true;
     });
   }
@@ -61,11 +61,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (!loaded)
-      return Scaffold(
-          body: Center(
-              child: LoadingAnimationWidget.fourRotatingDots(
-                  color: defaultGreen, size: 50)));
+    if (!loaded) return Scaffold(body: Center(child: LoadingAnimationWidget.fourRotatingDots(color: defaultGreen, size: 50)));
     return SafeArea(
       child: Scaffold(
         body: RefreshIndicator(

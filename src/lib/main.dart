@@ -5,6 +5,7 @@ import 'package:src/pages/home_page.dart';
 import 'package:src/pages/login_page.dart';
 import 'package:src/pages/profile_page.dart';
 import 'package:src/pages/qr_page.dart';
+import 'package:src/pages/redeem_page.dart';
 import 'package:src/pages/signup_page.dart';
 import 'package:src/pages/spending_page%20.dart';
 
@@ -18,7 +19,8 @@ void main() {
       "/qr": (context) => QrPage(),
       "/earned": (context) => EarningPage(),
       "/spent": (context) => SpendingPage(),
-      "/profile": (context) => ProfilePage()
+      "/profile": (context) => ProfilePage(),
+      "/redeem": (context) => RedeemPage()
     },
     theme: ThemeData(
         primaryColor: Color(0xFF333333),
