@@ -47,7 +47,7 @@ class _NavigationState extends State<Navigation> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              navButton(0, "Home", Icon(Icons.home), "/"),
+              navButton(0, "Home", Icon(Icons.home), "/home"),
               navButton(1, "Your code", Icon(Icons.qr_code), "/qr"),
               navButton(2, "Redeem", Icon(Icons.redeem), "/redeem"),
               navButton(3, "Profile", Icon(Icons.account_circle), "/profile"),
