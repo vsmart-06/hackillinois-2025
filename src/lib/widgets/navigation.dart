@@ -11,13 +11,15 @@ class Navigation extends StatefulWidget {
 }
 
 class _NavigationState extends State<Navigation> {
-  Widget navButton(int index, String label, Icon icon, String route) {
+  Widget navButton(int index, String label, Icon icon, String route, bool enable) {
     return TextButton(
       onPressed: () {
-        setState(() {
-          widget.selected = index;
-        });
-        Navigator.popAndPushNamed(context, route);
+        if (enable) {
+          setState(() {
+            widget.selected = index;
+          });
+          Navigator.popAndPushNamed(context, route);
+        }
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -47,10 +49,10 @@ class _NavigationState extends State<Navigation> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              navButton(0, "Home", Icon(Icons.home), "/"),
-              navButton(1, "Your code", Icon(Icons.qr_code), "/qr"),
-              navButton(2, "Redeem", Icon(Icons.redeem), "/redeem"),
-              navButton(3, "Profile", Icon(Icons.account_circle), "/profile"),
+              navButton(0, "Home", Icon(Icons.home), "/home", true),
+              navButton(1, "Your code", Icon(Icons.qr_code), "/qr", true),
+              navButton(2, "Redeem", Icon(Icons.redeem), "/redeem", false),
+              navButton(3, "Profile", Icon(Icons.account_circle), "/profile", false),
             ],
           ),
         ),

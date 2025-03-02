@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:src/services/secure_storage.dart';
 import 'package:src/widgets/navigation.dart';
 
 class QrPage extends StatefulWidget {
@@ -11,6 +12,20 @@ class QrPage extends StatefulWidget {
 class _QrPageState extends State<QrPage> {
   Color defaultColor = Color(0xFF333333);
   Color defaultGreen = Color(0xFF23B65E);
+  String? email;
+  String? zip;
+  String? wallet;
+
+  void loadDetails() async {
+    String? e = await SecureStorage.read("email");
+    String? z = await SecureStorage.read("zip");
+    String? w = await SecureStorage.read("wallet");
+    setState(() {
+      email = e;
+      zip = z;
+      wallet = w;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

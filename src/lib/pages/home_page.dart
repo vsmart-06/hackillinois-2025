@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:src/services/secure_storage.dart';
+import 'package:src/widgets/logout_button.dart';
 import 'package:src/widgets/navigation.dart';
 
 class HomePage extends StatefulWidget {
@@ -11,6 +13,27 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   Color defaultColor = Color(0xFF333333);
   Color defaultGreen = Color(0xFF23B65E);
+  String? email;
+  String? zip;
+  String? wallet;
+
+  void loadDetails() async {
+    String? e = await SecureStorage.read("email");
+    String? z = await SecureStorage.read("zip");
+    String? w = await SecureStorage.read("wallet");
+    setState(() {
+      email = e;
+      zip = z;
+      wallet = w;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadDetails();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +45,7 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextButton.icon(
                       onPressed: () {},
@@ -49,6 +73,7 @@ class _HomePageState extends State<HomePage> {
                           foregroundColor:
                               WidgetStatePropertyAll(defaultColor)),
                     ),
+                    LogoutButton()
                   ],
                 ),
                 SizedBox(height: 50),
