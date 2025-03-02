@@ -44,16 +44,25 @@ class _QrPageState extends State<QrPage> {
         setState(() {
           selected = index;
         });
-      }, 
+      },
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: Text(name, style: TextStyle(fontSize: 16),),
+        child: Text(
+          name,
+          style: TextStyle(fontSize: 16),
+        ),
       ),
       style: ButtonStyle(
-        foregroundColor: WidgetStatePropertyAll((selected == index) ? Colors.white : defaultColor),
-        backgroundColor: WidgetStatePropertyAll((selected == index) ? defaultGreen : Colors.white),
-        shape: WidgetStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30), side: BorderSide(color: (selected == index) ? Colors.transparent : defaultColor)))
-      ),
+          foregroundColor: WidgetStatePropertyAll(
+              (selected == index) ? Colors.white : defaultColor),
+          backgroundColor: WidgetStatePropertyAll(
+              (selected == index) ? defaultGreen : Colors.white),
+          shape: WidgetStatePropertyAll(RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+              side: BorderSide(
+                  color: (selected == index)
+                      ? Colors.transparent
+                      : defaultColor)))),
     );
   }
 
@@ -66,7 +75,13 @@ class _QrPageState extends State<QrPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (!loaded) return Scaffold(body: Center(child: LoadingAnimationWidget.fourRotatingDots(color: defaultGreen, size: 50),),);
+    if (!loaded)
+      return Scaffold(
+        body: Center(
+          child: LoadingAnimationWidget.fourRotatingDots(
+              color: defaultGreen, size: 50),
+        ),
+      );
     return SafeArea(
         child: Scaffold(
       body: SingleChildScrollView(
@@ -99,38 +114,51 @@ class _QrPageState extends State<QrPage> {
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(300),
-                    child: Image(
-                    image: NetworkImage(
-                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs10cupyp3Wf-pZvdPjGQuKne14ngVZbYdDQ&s"),
-                    width: 150,
-                    height: 150,
-                  )),
+                      borderRadius: BorderRadius.circular(300),
+                      child: Image(
+                        image: NetworkImage(
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs10cupyp3Wf-pZvdPjGQuKne14ngVZbYdDQ&s"),
+                        width: 150,
+                        height: 150,
+                      )),
                 ),
                 Positioned.fill(
                   child: Align(
                     alignment: Alignment.topRight,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 15, 10, 0),
-                      child: LogoutButton(white: true,),
+                      child: LogoutButton(
+                        white: true,
+                      ),
                     ),
                   ),
                 )
               ],
             ),
-            Text("Carl Evans", style: TextStyle(fontSize: 18),),
-            SizedBox(height: 50,),
+            Text(
+              "Carl Evans",
+              style: TextStyle(fontSize: 18),
+            ),
+            SizedBox(
+              height: 20,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 qrButton("Wallet", 0),
-                SizedBox(width: 20,),
+                SizedBox(
+                  width: 20,
+                ),
                 qrButton("TRC", 1),
               ],
             ),
-            SizedBox(height: 20,),
-            QrImageView(data: baseUrl + "/transit-pay?wallet=${wallet!}", size: 170,),
-            Text(DateTime.now().toString(), style: TextStyle(fontSize: 16),)
+            SizedBox(
+              height: 20,
+            ),
+            QrImageView(
+              data: baseUrl + "/transit-pay?wallet=${wallet!}",
+              size: 170,
+            ),
           ],
         ),
       ),
