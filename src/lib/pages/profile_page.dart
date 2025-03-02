@@ -41,6 +41,77 @@ class _ProfilePageState extends State<ProfilePage> {
     loadDetails();
   }
 
+  Widget badgeWidget(String text, Color primaryColor, Color secondaryColor, {Icon? icon, String? value}) {
+    return Card(
+      elevation: 10,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      color: primaryColor,
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Container(
+          width: 100,
+          height: 100,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              (icon != null) ? icon : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(value!, style: TextStyle(fontSize: 18, color: defaultGreen, fontWeight: FontWeight.bold),),
+                  Text("TRC", style: TextStyle(fontSize: 18, color: defaultGreen, fontWeight: FontWeight.bold),),
+                ],
+              ),
+              Text(text, style: TextStyle(fontSize: 14, color: secondaryColor),)
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget historyItem(String image, String heading, String date, int price, [String? subHeading]) {
+    return Container(
+      constraints: BoxConstraints(
+        minHeight: 90
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: defaultColor)
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Image(image: NetworkImage(image, scale: 1), width: 56, height: 56, fit: BoxFit.contain,),
+                SizedBox(width: 30,),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(heading, style: TextStyle(color: defaultColor, fontSize: 16, fontWeight: FontWeight.bold),),
+                    (subHeading != null) ? Text(subHeading, style: TextStyle(color: defaultColor, fontSize: 12),) : Container(),
+                    Text(date, style: TextStyle(color: defaultColor, fontSize: 10),),
+                  ]
+                ),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(((price > 0) ? "+" : "") + price.toString(), style: TextStyle(color: (price > 0) ? defaultGreen : Color(0xFFFD4E64), fontSize: 22, fontWeight: FontWeight.bold),),
+                Text("TRC", style: TextStyle(color: (price > 0) ? defaultGreen : Color(0xFFFD4E64), fontSize: 12, fontWeight: FontWeight.bold),),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (!loaded) return Scaffold(body: Center(child: LoadingAnimationWidget.fourRotatingDots(color: defaultGreen, size: 50),),);
@@ -95,20 +166,36 @@ class _ProfilePageState extends State<ProfilePage> {
                 )
               ],
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                badgeWidget("97 bus rides", defaultColor, Colors.white, icon: Icon(Icons.directions_bus_filled, size: 40, color: Colors.white,)),
+                badgeWidget("30 train rides", Colors.white, defaultColor, icon: Icon(Icons.train, size: 40, color: defaultColor,)),
+                badgeWidget("earned", defaultColor, Colors.white, value: "350+"),
+              ],
+            ),
+            SizedBox(height: 20,),
+            Text("History", style: TextStyle(fontSize: 20, color: defaultColor, fontWeight: FontWeight.bold),),
+            SizedBox(height: 20,),
             Padding(
-              padding: const EdgeInsets.fromLTRB(10, 15, 10, 20),
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Name: ${name!}", style: TextStyle(fontSize: 18),),
-                  SizedBox(height: 50,),
-                  Text("Email: ${email!}", style: TextStyle(fontSize: 18),),
-                  SizedBox(height: 50,),
-                  Text("Zip code: ${zip!}", style: TextStyle(fontSize: 18),),
-                  SizedBox(height: 50,),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: historyItem("https://pbs.twimg.com/profile_images/1567987942576078854/pANzzewx_400x400.jpg", "Route 50E", "02/03/2025", 32, "Lincoln Square - Illini Union"),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: historyItem("https://img.vendingmarketwatch.com/files/base/cygnus/vmw/image/2014/06/caffe-bene-logo_11514716.png", "Caffe Bene Green", "01/03/2025", -50),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: historyItem("https://1000logos.net/wp-content/uploads/2020/09/Amtrak-Logo.png", "New Orleans Line", "21/01/2025", -50, "Chicago Union - Illinois Terminal"),
+                  ),
                 ],
               ),
-            ),
+            )
           ],
         ),
       ),
