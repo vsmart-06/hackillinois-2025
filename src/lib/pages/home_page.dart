@@ -189,7 +189,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             Image(
                               image: NetworkImage(
-                                  "https://static.vecteezy.com/system/resources/previews/011/115/550/non_2x/financial-business-statistics-with-bar-graph-and-candlestick-chart-show-stock-market-price-and-effective-earning-on-white-background-vector.jpg"),
+                                  "https://raw.githubusercontent.com/vsmart-06/hackillinois-2025/refs/heads/master/src/lib/assets/graph%203.png"),
                               width: 340,
                               height: 170,
                             ),
@@ -241,7 +241,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 Image(
                                   image: NetworkImage(
-                                      "https://static.vecteezy.com/system/resources/previews/011/115/550/non_2x/financial-business-statistics-with-bar-graph-and-candlestick-chart-show-stock-market-price-and-effective-earning-on-white-background-vector.jpg"),
+                                      "https://raw.githubusercontent.com/vsmart-06/hackillinois-2025/refs/heads/master/src/lib/assets/graph%201.png"),
                                   width: 150,
                                   height: 135,
                                 ),
@@ -284,7 +284,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 Image(
                                   image: NetworkImage(
-                                      "https://static.vecteezy.com/system/resources/previews/011/115/550/non_2x/financial-business-statistics-with-bar-graph-and-candlestick-chart-show-stock-market-price-and-effective-earning-on-white-background-vector.jpg"),
+                                      "https://raw.githubusercontent.com/vsmart-06/hackillinois-2025/refs/heads/master/src/lib/assets/graph%202.png"),
                                   width: 150,
                                   height: 135,
                                 ),
