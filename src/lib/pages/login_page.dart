@@ -17,17 +17,23 @@ class _LoginPageState extends State<LoginPage> {
   String? email;
   String? zip;
   String? wallet;
+  String? name;
+
+  bool emailError = false;
+  bool passwordError = false;
 
   void loadDetails() async {
     String? e = await SecureStorage.read("email");
     String? z = await SecureStorage.read("zip");
     String? w = await SecureStorage.read("wallet");
+    String? n = await SecureStorage.read("name");
     setState(() {
       email = e;
       zip = z;
       wallet = w;
+      name = n;
     });
-    if (!(e == null || z == null || w == null)) {
+    if (!(e == null || z == null || w == null || n == null)) {
       await Navigator.popAndPushNamed(context, "/home");
     }
   }
@@ -104,7 +110,9 @@ class _LoginPageState extends State<LoginPage> {
                             borderSide: BorderSide(color: defaultColor)),
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: defaultColor)),
-                        focusColor: Colors.white),
+                        focusColor: Colors.white,
+                        errorText: (emailError) ? "Email is required" : null
+                      ),
                     controller: emailController,
                   )
                 ],
@@ -136,7 +144,9 @@ class _LoginPageState extends State<LoginPage> {
                             borderSide: BorderSide(color: defaultColor)),
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: defaultColor)),
-                        focusColor: Colors.white),
+                        focusColor: Colors.white,
+                        errorText: (passwordError) ? "Password is required" : null
+                      ),
                     controller: passwordController,
                   )
                 ],
@@ -146,7 +156,11 @@ class _LoginPageState extends State<LoginPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  login();
+                  setState(() {
+                    emailError = emailController.text.isEmpty;
+                    passwordError = passwordController.text.isEmpty;
+                  });
+                  if (!emailError && !passwordError) login();
                 },
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),

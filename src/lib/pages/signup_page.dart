@@ -11,11 +11,13 @@ class SignupPage extends StatefulWidget {
 class _SignupPageState extends State<SignupPage> {
   Color defaultColor = Color(0xFF333333);
   Color defaultGreen = Color(0xFF23B65E);
+  TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController password2Controller = TextEditingController();
   TextEditingController zipController = TextEditingController();
   bool passwordMatch = true;
+  bool nameEmpty = false;
   bool emailEmpty = false;
   bool passwordEmpty = false;
   bool password2Empty = false;
@@ -24,6 +26,39 @@ class _SignupPageState extends State<SignupPage> {
   void signup() {
     SecureStorage.writeMany({"email": emailController.text, "zip": zipController.text});
     Navigator.popAndPushNamed(context, "/home");
+  }
+
+  Widget inputField(String name, TextEditingController controller, bool error, String errorText) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 5.0),
+          child: Text(
+            name,
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+        ),
+        TextField(
+          cursorColor: defaultColor,
+          decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.white,
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(color: defaultColor)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: defaultColor)),
+              disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: defaultColor)),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: defaultColor)),
+              focusColor: Colors.white,
+              errorText: (error) ? errorText : null
+            ),
+          controller: controller,
+        )
+      ],
+    );
   }
 
   @override
@@ -63,137 +98,23 @@ class _SignupPageState extends State<SignupPage> {
               SizedBox(
                 height: 20,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5.0),
-                    child: Text(
-                      "Email",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                  ),
-                  TextField(
-                    cursorColor: defaultColor,
-                    decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(color: defaultColor)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: defaultColor)),
-                        disabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: defaultColor)),
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: defaultColor)),
-                        focusColor: Colors.white,
-                        errorText: (emailEmpty) ? "Email is required" : null
-                      ),
-                    controller: emailController,
-                  )
-                ],
-              ),
+              inputField("Name", nameController, nameEmpty, "Name is required"),
               SizedBox(
                 height: 20,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5.0),
-                    child: Text(
-                      "Password",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                  ),
-                  TextField(
-                    cursorColor: defaultColor,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(color: defaultColor)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: defaultColor)),
-                        disabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: defaultColor)),
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: defaultColor)),
-                        focusColor: Colors.white,
-                        errorText: (passwordEmpty) ? "Password is required" : null
-                      ),
-                    controller: passwordController,
-                  )
-                ],
-              ),
+              inputField("Email", emailController, emailEmpty, "Email is required"),
               SizedBox(
                 height: 20,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5.0),
-                    child: Text(
-                      "Re-enter Password",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                  ),
-                  TextField(
-                    cursorColor: defaultColor,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(color: defaultColor)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: defaultColor)),
-                        disabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: defaultColor)),
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: defaultColor)),
-                        focusColor: Colors.white,
-                        errorText: (!passwordMatch) ? "The passwords must match" : (password2Empty) ? "Re-entered password is required" : null
-                      ),
-                    controller: password2Controller,
-                  )
-                ],
-              ),
+              inputField("Password", passwordController, passwordEmpty, "Password is required"),
               SizedBox(
                 height: 20,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5.0),
-                    child: Text(
-                      "Zip Code",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                  ),
-                  TextField(
-                    cursorColor: defaultColor,
-                    decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(color: defaultColor)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: defaultColor)),
-                        disabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: defaultColor)),
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: defaultColor)),
-                        focusColor: Colors.white,
-                        errorText: (zipEmpty) ? "Zip code is required" : null
-                      ),
-                    controller: zipController,
-                  )
-                ],
+              inputField("Re-enter Password", password2Controller, password2Empty, "Re-entered password is required"),
+              SizedBox(
+                height: 20,
               ),
+              inputField("Zip code", zipController, zipEmpty, "Zip code is required"),
               SizedBox(
                 height: 20,
               ),
@@ -201,6 +122,7 @@ class _SignupPageState extends State<SignupPage> {
                   onPressed: () {
                     setState(() {
                       passwordMatch = (passwordController.text == password2Controller.text);
+                      nameEmpty = nameController.text.isEmpty;
                       emailEmpty = emailController.text.isEmpty;
                       passwordEmpty = passwordController.text.isEmpty;
                       password2Empty = password2Controller.text.isEmpty;

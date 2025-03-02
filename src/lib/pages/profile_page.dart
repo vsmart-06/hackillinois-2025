@@ -3,14 +3,14 @@ import 'package:src/services/secure_storage.dart';
 import 'package:src/widgets/logout_button.dart';
 import 'package:src/widgets/navigation.dart';
 
-class QrPage extends StatefulWidget {
-  const QrPage({super.key});
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
 
   @override
-  State<QrPage> createState() => _QrPageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _QrPageState extends State<QrPage> {
+class _ProfilePageState extends State<ProfilePage> {
   Color defaultColor = Color(0xFF333333);
   Color defaultGreen = Color(0xFF23B65E);
   String? email;
@@ -29,6 +29,13 @@ class _QrPageState extends State<QrPage> {
       wallet = w;
       name = n;
     });
+  }
+  
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadDetails();
   }
 
   @override
@@ -84,15 +91,25 @@ class _QrPageState extends State<QrPage> {
                 )
               ],
             ),
-            Text("Carl Evans", style: TextStyle(fontSize: 18),),
-            SizedBox(height: 50,),
-            Image(image: NetworkImage("https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Qr-code-ver-10.svg/220px-Qr-code-ver-10.svg.png"), width: 170, height: 170,),
-            Text(DateTime.now().toString(), style: TextStyle(fontSize: 16),)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 15, 10, 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Name: ${name!}", style: TextStyle(fontSize: 18),),
+                  SizedBox(height: 50,),
+                  Text("Email: ${email!}", style: TextStyle(fontSize: 18),),
+                  SizedBox(height: 50,),
+                  Text("Zip code: ${zip!}", style: TextStyle(fontSize: 18),),
+                  SizedBox(height: 50,),
+                ],
+              ),
+            ),
           ],
         ),
       ),
       bottomNavigationBar: Navigation(
-        selected: 1,
+        selected: 3,
       ),
     ));
   }

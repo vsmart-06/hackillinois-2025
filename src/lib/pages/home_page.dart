@@ -16,15 +16,18 @@ class _HomePageState extends State<HomePage> {
   String? email;
   String? zip;
   String? wallet;
+  String? name;
 
   void loadDetails() async {
     String? e = await SecureStorage.read("email");
     String? z = await SecureStorage.read("zip");
     String? w = await SecureStorage.read("wallet");
+    String? n = await SecureStorage.read("name");
     setState(() {
       email = e;
       zip = z;
       wallet = w;
+      name = n;
     });
   }
 
@@ -46,6 +49,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextButton.icon(
                       onPressed: () {},
