@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:src/services/secure_storage.dart';
+import "package:http/http.dart";
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -21,6 +24,8 @@ class _LoginPageState extends State<LoginPage> {
 
   bool emailError = false;
   bool passwordError = false;
+
+  String baseUrl = "https://8eac-130-126-255-124.ngrok-free.app";
 
   void loadDetails() async {
     String? e = await SecureStorage.read("email");
@@ -45,7 +50,17 @@ class _LoginPageState extends State<LoginPage> {
     loadDetails();
   }
 
-  void login() {
+  void login() async {
+    print(emailController.text);
+    print(passwordController.text);
+    var response = await post(Uri.parse(baseUrl + "/login"), headers: {"Content-Type": "application/json"}, body: jsonEncode({"email": emailController.text, "password": passwordController.text}));
+    var info = jsonDecode(response.body);
+
+    if (info["name"] == "Carl Evans") info["email"] = "carlg@illinois.edu";
+    else info["email"] = "billgates@microsoft.com";
+
+    await SecureStorage.writeMany({"name": info["name"], "email": info["email"], "zip": info["location"], "wallet": info["ata_acc_add"]});
+
     SecureStorage.writeMany({"email": emailController.text});
     Navigator.popAndPushNamed(context, "/home");
   }

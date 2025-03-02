@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:src/services/secure_storage.dart';
 import 'package:src/widgets/logout_button.dart';
 import 'package:src/widgets/navigation.dart';
@@ -17,6 +19,10 @@ class _QrPageState extends State<QrPage> {
   String? zip;
   String? wallet;
   String? name;
+  bool loaded = false;
+  int selected = 0;
+
+  String baseUrl = "https://8eac-130-126-255-124.ngrok-free.app";
 
   void loadDetails() async {
     String? e = await SecureStorage.read("email");
@@ -28,11 +34,39 @@ class _QrPageState extends State<QrPage> {
       zip = z;
       wallet = w;
       name = n;
+      loaded = true;
     });
+  }
+
+  Widget qrButton(String name, int index) {
+    return TextButton(
+      onPressed: () {
+        setState(() {
+          selected = index;
+        });
+      }, 
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        child: Text(name, style: TextStyle(fontSize: 16),),
+      ),
+      style: ButtonStyle(
+        foregroundColor: WidgetStatePropertyAll((selected == index) ? Colors.white : defaultColor),
+        backgroundColor: WidgetStatePropertyAll((selected == index) ? defaultGreen : Colors.white),
+        shape: WidgetStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30), side: BorderSide(color: (selected == index) ? Colors.transparent : defaultColor)))
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadDetails();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (!loaded) return Scaffold(body: Center(child: LoadingAnimationWidget.fourRotatingDots(color: defaultGreen, size: 50),),);
     return SafeArea(
         child: Scaffold(
       body: SingleChildScrollView(
@@ -86,7 +120,16 @@ class _QrPageState extends State<QrPage> {
             ),
             Text("Carl Evans", style: TextStyle(fontSize: 18),),
             SizedBox(height: 50,),
-            Image(image: NetworkImage("https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Qr-code-ver-10.svg/220px-Qr-code-ver-10.svg.png"), width: 170, height: 170,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                qrButton("Wallet", 0),
+                SizedBox(width: 20,),
+                qrButton("TRC", 1),
+              ],
+            ),
+            SizedBox(height: 20,),
+            QrImageView(data: baseUrl + "/transit-pay?wallet=${wallet!}", size: 170,),
             Text(DateTime.now().toString(), style: TextStyle(fontSize: 16),)
           ],
         ),

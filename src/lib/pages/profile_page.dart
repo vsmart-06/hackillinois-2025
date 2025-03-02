@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:src/services/secure_storage.dart';
 import 'package:src/widgets/logout_button.dart';
 import 'package:src/widgets/navigation.dart';
@@ -17,6 +18,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String? zip;
   String? wallet;
   String? name;
+  bool loaded = false;
 
   void loadDetails() async {
     String? e = await SecureStorage.read("email");
@@ -28,6 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
       zip = z;
       wallet = w;
       name = n;
+      loaded = true;
     });
   }
   
@@ -40,6 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    if (!loaded) return Scaffold(body: Center(child: LoadingAnimationWidget.fourRotatingDots(color: defaultGreen, size: 50),),);
     return SafeArea(
         child: Scaffold(
       body: SingleChildScrollView(

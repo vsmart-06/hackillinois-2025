@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:src/services/secure_storage.dart';
 import 'package:src/widgets/logout_button.dart';
 import 'package:src/widgets/navigation.dart';
@@ -17,6 +21,19 @@ class _HomePageState extends State<HomePage> {
   String? zip;
   String? wallet;
   String? name;
+  bool loaded = false;
+
+  int? coins;
+
+  String baseUrl = "https://8eac-130-126-255-124.ngrok-free.app";
+
+  void loadCoins() async {
+    var response = await post(Uri.parse(baseUrl + "/home"), headers: {"Content-Type": "application/json"}, body: jsonEncode({"ata_acc_add": wallet}));
+    var info = jsonDecode(response.body);
+    setState(() {
+      coins = int.parse(info["balance"]);
+    });
+  }
 
   void loadDetails() async {
     String? e = await SecureStorage.read("email");
@@ -28,7 +45,9 @@ class _HomePageState extends State<HomePage> {
       zip = z;
       wallet = w;
       name = n;
+      loaded = true;
     });
+    loadCoins();
   }
 
   @override
@@ -40,6 +59,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    if (!loaded) return Scaffold(body: Center(child: LoadingAnimationWidget.fourRotatingDots(color: defaultGreen, size: 50)));
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -64,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                           Text(
-                            "61801",
+                            zip!,
                             style: TextStyle(fontSize: 12),
                           )
                         ],
@@ -86,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(fontSize: 14, color: defaultColor),
                 ),
                 Text(
-                  "300 coins",
+                  "${coins} coins",
                   style: TextStyle(
                       fontSize: 30,
                       color: defaultColor,
@@ -154,7 +174,7 @@ class _HomePageState extends State<HomePage> {
                   height: 25,
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
