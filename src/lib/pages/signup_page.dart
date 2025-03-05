@@ -71,32 +71,8 @@ class _SignupPageState extends State<SignupPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Stack(
-                alignment: Alignment.bottomCenter,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(300),
-                      color: Colors.white,
-                    ),
-                    width: 180,
-                    height: 180,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(300),
-                        child: Image(
-                          image: NetworkImage(
-                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs10cupyp3Wf-pZvdPjGQuKne14ngVZbYdDQ&s"),
-                          width: 150,
-                          height: 150,
-                        )),
-                  ),
-                ],
-              ),
               SizedBox(
-                height: 20,
+                height: 100,
               ),
               inputField("Name", nameController, nameEmpty, "Name is required"),
               SizedBox(

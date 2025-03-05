@@ -263,19 +263,19 @@ class _ProfilePageState extends State<ProfilePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  badgeWidget("97 bus rides", defaultColor, Colors.white,
+                  badgeWidget("97 bus rides", Colors.white, defaultColor,
                       icon: Icon(
                         Icons.directions_bus_filled,
                         size: 40,
-                        color: Colors.white,
+                        color: defaultColor,
                       )),
-                  badgeWidget("earned", Colors.white, defaultColor,
+                  badgeWidget("earned", defaultColor, Colors.white,
                       value: "350+"),
-                  badgeWidget("30 train rides", defaultColor, Colors.white,
+                  badgeWidget("30 train rides", Colors.white, defaultColor,
                       icon: Icon(
                         Icons.train,
                         size: 40,
-                        color: Colors.white,
+                        color: defaultColor,
                       )),
                 ],
               ),

@@ -182,7 +182,7 @@ class _QrPageState extends State<QrPage> {
                   style: TextStyle(fontSize: 14, color: defaultColor),
                 ),
                 Text(
-                  ((selected == 0) ? "\$${cash}" : "${coins} coins"),
+                  ((selected == 0) ? "\$${cash}.00" : "${coins} coins"),
                   style: TextStyle(
                       fontSize: 30,
                       color: defaultColor,
